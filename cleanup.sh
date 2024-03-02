@@ -118,24 +118,18 @@ for file in *; do
 	fi
 done
 
-echo -e " $i total files were moved   $totalbytes total bytes were moved"
-echo -e "\n $imageCT files were moved into images   $imagebyte bytes were moved into images"
-echo -e "\n $docCT files were moved into documents   $docbyte bytes were moved into documents"
-echo -e "\n $pdfCT files were moved into pdfs   $pdfbyte bytes were moved into pdfs"
-echo -e "\n $exeCT files were moved into executables   $exebyte bytes were moved into executables"
-echo -e "\n $dataCT files were moved into data   $databyte bytes were moved into data"
-echo -e "\n $unknownCT files were moved into unknown   $unknownbyte bytes were moved into unknown"
+declare -i totAvg=$((totalbytes/i))
+declare -i imageAvg=$((imagebyte/imageCT))
+declare -i docAvg=$((docbyte/docAvg))
+declare -i pdfAvg=$((pdfbyte/pdfCT))
+declare -i exeAvg=$((exebyte/exeCT))
+declare -i dataAvg=$((databyte/dataCT))
+declare -i unknownAvg=$((unknownbyte/unknownCT))
 
-echo -e "System information has been gathered.  Here’s the summary:" > system_info/system_info.txt
-echo -e "\nDate and Time: $(date +%m/%d/%Y\ %T\ %Z)" >> system_info/system_info.txt
-echo -e "\nCurrent Shell User: $USER" >> system_info/system_info.txt
-echo -e "\nRoot User: $(whoami)" >> system_info/system_info.txt
-echo -e "\nCurrent Working Directory: $(pwd)" >> system_info/system_info.txt
-echo -e "\nSystem Usage:" >> system_info/system_info.txt
-echo -e "$(top -b -n1 -d5 | head -n5)" >> system_info/system_info.txt
-echo -e "\nDisk Usage:" >> system_info/system_info.txt
-echo -e "$(df -BK -H)" >> system_info/system_info.txt
-
-echo -e "Successfully gathered system infomation. Printing info from system_info.txt.\n"
-cat system_info/system_info.txt
-
+echo -e "$i total files were moved   $totalbytes total bytes were moved   average file size overall is $totAvg B"
+echo -e "\n$imageCT files were moved into images   $imagebyte bytes were moved into images   average image file size is $imageAvg B"
+echo -e "\n$docCT files were moved into documents   $docbyte bytes were moved into documents   average document file size is $docAvg B"
+echo -e "\n$pdfCT files were moved into pdfs   $pdfbyte bytes were moved into pdfs   average pdf file size is $pdfAvg B"
+echo -e "\n$exeCT files were moved into executables   $exebyte bytes were moved into executables   average executable file size is $exeAvg B"
+echo -e "\n$dataCT files were moved into data   $databyte bytes were moved into data   average data file size is $dataAvg B"
+echo -e "\n$unknownCT files were moved into unknown   $unknownbyte bytes were moved into unknown   average unknown file size is $unknownAvg B"
