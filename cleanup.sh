@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ ! -d "images" ]
 then
     echo "images folder does not exist. Creating images."
@@ -55,6 +57,33 @@ else
     echo "unknown already exists."
 fi
 
+
+
+for file in *; do
+	extension="${file##*.}"
+	echo "$extension"
+
+	if [ "$extension" = "jpg" ] || [ "$extension" = "jpeg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]; then
+		mv "$file" images
+
+	elif [ "$extension" = "txt" ] || [ "$extension" = "docx" ] || [ "$extension" = "doc" ] || [ "$extension" = "pages" ]  || [ "$extension" = "key" ] || [ "$extension" = "pptx" ] || [ "$extension" = "ppt" ] || [ "$extension" = "odt" ] || [ "$extension" = "md" ]; then
+		mv "$file" documents
+
+	elif [ "$extension" = "pdf" ]; then
+		mv "$file" pdf
+
+	elif [ "$extension" = "sh" ] || [ "$extension" = "exe" ]; then
+		mv "$file" executables
+
+	elif [ "$extension" = "csv" ] || [ "$extension" = "xlsx" ] || [ "$extension" = "json" ]; then
+		mv "$file" data
+
+	else
+		mv"$file" unknown
+
+	fi
+done
+
 echo -e "System information has been gathered.  Here’s the summary:" > system_info/system_info.txt
 echo -e "\nDate and Time: $(date +%m/%d/%Y\ %T\ %Z)" >> system_info/system_info.txt
 echo -e "\nCurrent Shell User: $USER" >> system_info/system_info.txt
@@ -67,3 +96,4 @@ echo -e "$(df -BK -H)" >> system_info/system_info.txt
 
 echo -e "Successfully gathered system infomation. Printing info from system_info.txt.\n"
 cat system_info/system_info.txt
+
