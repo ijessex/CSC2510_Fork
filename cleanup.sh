@@ -57,32 +57,36 @@ else
     echo "unknown already exists."
 fi
 
+declare -i i=0
 
-
-for file in *; do
-	extension="${file##*.}"
+for FILE in *; do
+	extension="$FILE##*.}"
 	echo "$extension"
 
+	i=$((i+1))
+
 	if [ "$extension" = "jpg" ] || [ "$extension" = "jpeg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]; then
-		mv "$file" images
+		mv "$FILE" images
 
 	elif [ "$extension" = "txt" ] || [ "$extension" = "docx" ] || [ "$extension" = "doc" ] || [ "$extension" = "pages" ]  || [ "$extension" = "key" ] || [ "$extension" = "pptx" ] || [ "$extension" = "ppt" ] || [ "$extension" = "odt" ] || [ "$extension" = "md" ]; then
-		mv "$file" documents
+		mv "$FILE" documents
 
 	elif [ "$extension" = "pdf" ]; then
-		mv "$file" pdf
+		mv "$FILE" pdfs
 
 	elif [ "$extension" = "sh" ] || [ "$extension" = "exe" ]; then
-		mv "$file" executables
+		mv "$FILE" executables
 
 	elif [ "$extension" = "csv" ] || [ "$extension" = "xlsx" ] || [ "$extension" = "json" ]; then
-		mv "$file" data
+		mv "$FILE" data
 
 	else
-		mv"$file" unknown
+		mv "$FILE" unknown
 
 	fi
 done
+
+echo -e "$i files were moved"
 
 echo -e "System information has been gathered.  Here’s the summary:" > system_info/system_info.txt
 echo -e "\nDate and Time: $(date +%m/%d/%Y\ %T\ %Z)" >> system_info/system_info.txt
