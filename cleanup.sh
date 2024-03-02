@@ -78,10 +78,10 @@ for file in *; do
 	extension="${file##*.}"
 
 	if [ -f "$file" ]; then
-		echo $extension
+		echo "$extension"
 
 		i=$((i+1))
-		filesize="$(stat -c%s $file)"
+		filesize="$(stat -c%s "$file")"
 		totalbytes=$((totalbytes+filesize))
 
 		if [ "$extension" = "jpg" ] || [ "$extension" = "jpeg" ] || [ "$extension" = "png" ] || [ "$extension" = "gif" ]; then
@@ -118,7 +118,13 @@ for file in *; do
 	fi
 done
 
-echo -e "$i files were moved   $totalbytes total bytes were moved"
+echo -e " $i total files were moved   $totalbytes total bytes were moved"
+echo -e "\n $imageCT files were moved into images   $imagebyte bytes were moved into images"
+echo -e "\n $docCT files were moved into documents   $docbyte bytes were moved into documents"
+echo -e "\n $pdfCT files were moved into pdfs   $pdfbyte bytes were moved into pdfs"
+echo -e "\n $exeCT files were moved into executables   $exebyte bytes were moved into executables"
+echo -e "\n $dataCT files were moved into data   $databyte bytes were moved into data"
+echo -e "\n $unknownCT files were moved into unknown   $unknownbyte bytes were moved into unknown"
 
 echo -e "System information has been gathered.  Here’s the summary:" > system_info/system_info.txt
 echo -e "\nDate and Time: $(date +%m/%d/%Y\ %T\ %Z)" >> system_info/system_info.txt
