@@ -23,6 +23,7 @@ echo -e "\nFound "$FILE" at $(find -name "$FILE")"
 echo -e "Checking "$FILE" to see if "$UNAME" already exists in file."
 
 I=0
+found=0
 
 while IFS= read -r LINE
 	do
@@ -33,6 +34,53 @@ while IFS= read -r LINE
 		I=$(($I + 1))
 		if [[ "$line" == "$UNAME" ]]; then
 			echo -e "Found "$UNAME" on line "$I"."
+			found=1
 		fi
+
 	done < "$(find -name "$FILE")"
 
+if [ $found = 0 ]; then
+	echo -e "You're username was not found in "$FILE".\n"
+	input=''
+	end=0
+		while [ $end -eq 0 ]
+		do
+			read -p "Would you like add your username to "$FILE"?    " input
+
+				if [[ "$input" == "Y" ]] || [[ "$input" == "y" ]] || [[ "$input" == "Yes" ]] || [[ "$input" == "yes" ]]; then
+					while [ $end -eq 0 ]
+					do
+						read -p "Would you also like the list to be alphabetized after your username is added?    " input
+
+						if [[ "$input" == "Y" ]] || [[ "$input" == "y" ]] || [[ "$input" == "Yes" ]] || [[ "$input" == "yes" ]]; then
+						end=1
+						#We sort once prior to appending because if there is not a newline at the end of the file, the sorting process will not work properly. By sorting beforehand, we ensure there is always a new line at the end of the file.
+						sort -o "$(find -name "$FILE")" "$(find -name "$FILE")"
+						echo -e $UNAME >> "$(find -name "$FILE")"
+						sort -o "$(find -name "$FILE")" "$(find -name "$FILE")"
+						echo $UNAME" was added to "$FILE" and "$FILE" was alphabetized."
+
+						elif [[ "$input" == "N" ]] || [[ "$input" == "n" ]] || [[ "$input" == "No" ]] || [[ "$input" == "no" ]]; then
+						end=1
+						#We sort once here for the same reason as above.
+						sort -o "$(find -name "$FILE")" "$(find -name "$FILE")"
+						echo $UNAME >> "$(find -name "$FILE")"
+						echo $UNAME" was added to "$FILE
+
+						else
+						echo "Please, enter Y, y, Yes, or yes to respond with \"yes\""
+						echo "Or enter N, n, No, or no to respond with \"no\""
+						fi
+
+					done
+
+				elif [[ "$input" == "N" ]] || [[ "$input" == "n" ]] || [[ "$input" == "No" ]] || [[ "$input" == "no" ]]; then
+				echo "Okay then. Ending script."
+				end=1
+
+				else
+				echo "Please, enter Y, y, Yes, or yes to respond with \"yes\""
+				echo "Or enter N, n, No, or no to respond with \"no\""
+				fi
+		done
+	fi
