@@ -23,10 +23,15 @@ echo -e "\nFound "$FILE" at $(find -name "$FILE")"
 echo -e "Checking "$FILE" to see if "$UNAME" already exists in file."
 
 I=0
+
 while IFS= read -r LINE
 	do
-		((I= I + 1))
-		if [ "$UNAME" == "$LINE" ]; then
+		var=$((${#LINE}-1))
+		printf -v line '%.*s' $var "$LINE"
+		#I know the code above looks weird, but I am truncating $LINE because there is something at the end of the string that makes it unequal to $UNAME when the two should be equal. I suspect the mystery character is a newline character of some variety, but for the life of me, I cannot figure out what it is. I have worked on this for the past 3 hours, and this is the solution I am using.
+
+		I=$(($I + 1))
+		if [[ "$line" == "$UNAME" ]]; then
 			echo -e "Found "$UNAME" on line "$I"."
 		fi
 	done < "$(find -name "$FILE")"
