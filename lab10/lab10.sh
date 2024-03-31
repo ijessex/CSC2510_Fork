@@ -17,16 +17,24 @@ DEFAULT='\033[0m'
 
 #Q1
 echo -e "${GREEN}Starts or ends with Jose$DEFAULT"
-grep -E '^Jose|Jose$' phonebook.dat
+grep -E --color=always '^Jose|Jose$' phonebook.dat
 
 #Q2
 echo -e "${GREEN}Contains sequence of at least 27 upper or lower-case alphabetic characters$DEFAULT"
-grep -E '[[:alpha:]]{27}' phonebook.dat
+grep -E --color=always '[[:alpha:]]{27}' phonebook.dat
 
 #Q3
 echo -e "${GREEN}Sequences of more than 18 characters$DEFAULT"
-grep -E '.{19}' phonebook.dat
+grep -E --color=always '.{19}' phonebook.dat
 
 #Q4
 echo -e "${GREEN}Sequences of exactly 10 characters$DEFAULT"
-grep -E '^.{10}$' phonebook.dat
+grep -E --color=always '^.{10}$' phonebook.dat
+
+#Q5
+echo -e "${GREEN}Sequences of 6-8 alphabetic characters surrounded by spaces or tabs$DEFAULT"
+grep -E --color=always '\s[[:alpha:]]{6,8}\s' phonebook.dat
+
+#Q6
+echo -e "${GREEN}Contains local phone number$DEFAULT"
+grep -E --color=always '^[0-9]{3}-[0-9]{4}|[^-d][0-9]{3}-[0-9]{4}' phonebook.dat
