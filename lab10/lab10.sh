@@ -23,3 +23,10 @@ grep -E '^Jose|Jose$' phonebook.dat
 echo -e "${GREEN}Contains sequence of at least 27 upper or lower-case alphabetic characters$DEFAULT"
 grep -E '[[:alpha:]]{27}' phonebook.dat
 
+#Q3
+echo -e "${GREEN}Sequences of more than 18 characters$DEFAULT"
+grep -E '.{19}' phonebook.dat
+
+#Q4
+echo -e "${GREEN}Sequences of exactly 10 characters$DEFAULT"
+grep -E '^.{10}$' phonebook.dat
